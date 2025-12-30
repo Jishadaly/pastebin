@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 const pastesRoutes = require("./routes/pasteRoute");
 const errorHandler = require("./middleware.js/errorHandler");
 
