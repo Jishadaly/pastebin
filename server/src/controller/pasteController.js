@@ -2,6 +2,7 @@ const Paste = require('../model/pasteModel');
 const asyncHandler = require('../utils/asyncHandler');
 const AppError = require('../utils/AppError');
 const { getNow } = require('../utils/time');
+const htmlLayout = require('../utils/htmlTemplete');
 
 
 const createPaste = asyncHandler(async (req, res) => {
@@ -57,22 +58,19 @@ const getPaste = asyncHandler(async (req, res) => {
   });
 });
 
-
-const htmlLayout = require('../utils/htmlTemplate');
-
 const viewPaste = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const now = new Date(getNow(req));
 
   const paste = await Paste.findById(id);
   if (!paste)
-    return res.status(404).send(htmlLayout('Paste Not Found', 'Error'));
+    return res.status(404).send(htmlLayout('Paste Not Found', 'Not Found'));
 
   if (paste.expiresAt && paste.expiresAt <= now)
-    return res.status(404).send(htmlLayout('Paste Expired', 'Error'));
+    return res.status(404).send(htmlLayout('Paste Expired', 'Expired'));
 
   if (paste.maxViews !== null && paste.views >= paste.maxViews)
-    return res.status(404).send(htmlLayout('Paste View Limit Exceeded', 'Error'));
+    return res.status(404).send(htmlLayout('Paste View Limit Exceeded', 'Limit Exceeded'));
 
   paste.views += 1;
   await paste.save();

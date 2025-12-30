@@ -1,9 +1,14 @@
 body {
   margin: 0;
-  background-color: #2e2e2e; /* gray background */
-  color: #fff; /* white text */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* left ↔ right */
+  align-items: center;     /* top ↕ bottom */
+  background-color: #2e2e2e;
+  color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 
 .app-container {
   display: flex;
@@ -11,6 +16,7 @@ body {
   align-items: center;
   padding: 2rem;
   min-height: 100vh;
+  
 }
 
 .title {
@@ -26,19 +32,19 @@ body {
   max-width: 600px;
 }
 
-textarea {
+textarea,
+input {
   width: 100%;
-  min-height: 150px;
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #555;
   background-color: #3a3a3a;
   color: #fff;
   font-size: 1rem;
-  resize: vertical;
 }
 
-textarea:focus {
+textarea:focus,
+input:focus {
   outline: none;
   border-color: #888;
 }
@@ -75,5 +81,41 @@ button:hover {
 }
 
 .url-container button {
-  padding: 0.5rem 1rem;
+  background-color: #707070;
+  border: 1px solid #8a8a8a;
+}
+
+.url-container button:hover {
+  background-color: #808080;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .paste-form input,
+  .paste-form textarea {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .paste-form input,
+  .paste-form textarea {
+    font-size: 0.9rem;
+  }
+  button {
+    font-size: 0.9rem;
+  }
+}
+
+.error-message {
+  color: #ff6b6b;
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
