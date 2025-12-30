@@ -58,24 +58,28 @@ const getPaste = asyncHandler(async (req, res) => {
 });
 
 
+const htmlLayout = require('../utils/htmlTemplate');
+
 const viewPaste = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const now = new Date(getNow(req));
 
   const paste = await Paste.findById(id);
-  if (!paste) return res.status(404).send('<h1>Paste Not Found</h1>');
+  if (!paste)
+    return res.status(404).send(htmlLayout('Paste Not Found', 'Error'));
 
   if (paste.expiresAt && paste.expiresAt <= now)
-    return res.status(404).send('<h1>Paste Expired</h1>');
+    return res.status(404).send(htmlLayout('Paste Expired', 'Error'));
 
   if (paste.maxViews !== null && paste.views >= paste.maxViews)
-    return res.status(404).send('<h1>Paste View Limit Exceeded</h1>');
+    return res.status(404).send(htmlLayout('Paste View Limit Exceeded', 'Error'));
 
   paste.views += 1;
   await paste.save();
 
-  res.send(`<pre>${paste.content}</pre>`);
+  res.send(htmlLayout(paste.content, 'Paste Content'));
 });
+
 
 
 const healthCheck = asyncHandler(async (req, res) => {
