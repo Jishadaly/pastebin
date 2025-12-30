@@ -18,7 +18,7 @@ function App() {
     if (maxViews) body.max_views = parseInt(maxViews);
 
     const res = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/api/pastes`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/pastes`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
