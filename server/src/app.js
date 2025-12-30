@@ -1,0 +1,15 @@
+const express = require("express");
+const cors = require("cors");
+const pastesRoutes = require("./routes/pasteRoute");
+const errorHandler = require("./middleware.js/errorHandler");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/api", pastesRoutes);
+
+app.use(errorHandler)
+
+module.exports = app;
